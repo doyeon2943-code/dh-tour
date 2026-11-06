@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>푸른 바다와 비경의 계곡 | 동해시 인터랙티브 투어 가이드</title>
+  
+  <!-- Open Graph 메타태그 (SNS 공유 시 썸네일 & 설명 최적화) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="푸른 바다와 비경의 계곡, 동해시 감성 투어 가이드">
+  <meta property="og:description" content="무릉계곡, 논골담길, 추암 촛대바위, 묵호항까지! 상세 대중교통 정보와 나만의 코스 플래너를 만나보세요.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80">
+  
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800&display=swap');
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 2.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-cyan-500 selection:text-white pb-28">
+
+  <!-- ================= TOP VIRAL HEADER & SNS TOOLBAR ================= -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="p-2 bg-gradient-to-tr from-cyan-600 to-blue-600 text-white rounded-xl shadow-md">
+          <i data-lucide="waves" class="w-5 h-5"></i>
+        </span>
+        <div>
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-cyan-700 to-blue-700 bg-clip-text text-transparent">동해로 떠나요</span>
+          <span class="hidden sm:inline-block text-xs text-slate-500 ml-1.5 font-medium">| 인터랙티브 투어 가이드</span>
+        </div>
+      </div>
+
+      <!-- SNS 공유 버튼 모음 -->
+      <div class="flex items-center space-x-2">
+        <button onclick="shareViaWebShare()" class="flex items-center space-x-1.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold rounded-lg shadow-sm transition">
+          <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+          <span>SNS 공유</span>
+        </button>
+        <button onclick="copyCurrentUrl()" class="p-2 hover:bg-slate-100 text-slate-600 rounded-lg transition" title="URL 링크 복사">
+          <i data-lucide="link" class="w-4 h-4"></i>
+        </button>
+        <button onclick="openCityBusModal()" class="flex items-center space-x-1 px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-lg text-xs font-medium transition">
+          <i data-lucide="bus" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">시티투어버스</span> 안내
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="relative min-h-[460px] sm:min-h-[520px] flex items-center justify-center overflow-hidden bg-gradient-to-b from-sky-900 via-slate-900 to-slate-900 text-white">
+    <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1800&q=80" 
+         alt="동해안 푸른 바다" 
+         class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay scale-105 transition duration-1000">
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cyan-200 text-xs font-medium mb-4">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+        <span>산과 바다, 감성 골목이 공존하는 곳</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight sm:leading-snug">
+        마음이 트이는 푸른 낭만, <br class="sm:hidden">
+        <span class="bg-gradient-to-r from-cyan-300 via-teal-200 to-blue-300 bg-clip-text text-transparent">동해시 여행 가이드</span>
+      </h1>
+      <p class="mt-3 sm:mt-4 text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
+        무릉계곡의 비경부터 논골담길 감성 골목, 추암 촛대바위 일출까지!<br class="hidden sm:inline">
+        대중교통 길찾기와 실시간 코스 플래너로 알찬 동해 여행을 계획해 보세요.
+      </p>
+
+      <!-- 일출 위젯 & 퀵 액션 -->
+      <div class="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3">
+        <div class="flex items-center space-x-2.5 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs text-amber-200">
+          <i data-lucide="sun-medium" class="w-4 h-4 text-amber-300"></i>
+          <span>내일 추암 촛대바위 일출 예정: <strong class="text-white">06:48 AM</strong></span>
+        </div>
+        <a href="#interactive-map" class="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-cyan-500/25 transition">
+          인터랙티브 맵 탐색
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+
+    <!-- 권역/테마 필터 탭 -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">대표 명소 & 대중교통</h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">원하는 테마를 클릭해 모아보거나, 버스·KTX 연계 경로를 확인하세요.</p>
+      </div>
+
+      <!-- 테마 필터 칩 -->
+      <div class="flex flex-wrap gap-1.5 p-1 bg-slate-200/60 rounded-xl" id="filter-container">
+        <button onclick="filterPlaces('all')" class="filter-btn active px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition">전체</button>
+        <button onclick="filterPlaces('sea')" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition">#바다·일출</button>
+        <button onclick="filterPlaces('mountain')" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition">#산·힐링</button>
+        <button onclick="filterPlaces('alley')" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition">#골목·감성</button>
+        <button onclick="filterPlaces('activity')" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition">#체험·액티비티</button>
+      </div>
+    </div>
+
+    <!-- ================= INTERACTIVE ILLUSTRATIVE MAP ================= -->
+    <section id="interactive-map" class="mb-12">
+      <div class="bg-gradient-to-br from-slate-900 to-sky-950 rounded-2xl p-4 sm:p-6 text-white shadow-xl relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-white/10 gap-2">
+          <div>
+            <div class="inline-flex items-center space-x-1.5 text-cyan-300 text-xs font-semibold">
+              <i data-lucide="map-pin" class="w-4 h-4"></i>
+              <span>동해시 권역별 인터랙티브 맵</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5">지도의 핀을 누르면 해당 명소 카드로 자동 이동하며 상세 대중교통이 열립니다.</p>
+          </div>
+          <span class="text-[11px] px-2.5 py-1 bg-white/10 rounded-full text-slate-300 self-start sm:self-auto">
+            KTX 묵호역 · 동해역 거점
+          </span>
+        </div>
+
+        <!-- 일러스트 벡터 맵 컨테이너 -->
+        <div class="relative w-full h-[260px] sm:h-[340px] my-2 flex items-center justify-center">
+          <svg viewBox="0 0 800 360" class="w-full h-full max-h-full select-none">
+            <!-- 동해 해안선 윤곽 (오른쪽 바다) -->
+            <path d="M 520 10 Q 560 90 540 180 T 580 350 L 790 350 L 790 10 Z" fill="#0369a1" opacity="0.3"/>
+            <!-- 산악 능선 라인 (왼쪽 내륙) -->
+            <path d="M 20 280 Q 90 210 160 260 T 320 220" fill="none" stroke="#059669" stroke-width="4" stroke-dasharray="4 6" opacity="0.4"/>
+            <text x="700" y="50" fill="#38bdf8" font-size="14" font-weight="700" opacity="0.6">동해 (EAST SEA)</text>
+            <text x="60" y="320" fill="#34d399" font-size="13" font-weight="600" opacity="0.6">두타산 · 청옥산맥</text>
+            
+            <!-- 기차 노선 (KTX) -->
+            <path d="M 500 20 L 490 130 L 460 230 L 450 340" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.7"/>
+            <text x="505" y="135" fill="#fef08a" font-size="10">묵호역 (KTX)</text>
+            <text x="475" y="235" fill="#fef08a" font-size="10">동해역 (KTX)</text>
+          </svg>
+
+          <!-- 인터랙티브 핀들 -->
+          <!-- 1. 망상해변 (북부) -->
+          <button onclick="scrollToPlace('place-mangsang')" class="absolute top-[8%] right-[32%] sm:right-[34%] group flex items-center space-x-1.5 focus:outline-none">
+            <span class="w-3.5 h-3.5 rounded-full bg-cyan-400 border-2 border-white shadow-lg animate-pulse"></span>
+            <span class="px-2 py-0.5 rounded-md bg-slate-800/90 text-cyan-200 text-[11px] font-bold group-hover:bg-cyan-500 group-hover:text-white transition">망상해변</span>
+          </button>
+
+          <!-- 2. 묵호항 & 논골담길 & 도째비골 (중부 해안) -->
+          <button onclick="scrollToPlace('place-nongol')" class="absolute top-[35%] right-[28%] sm:right-[30%] group flex items-center space-x-1.5 focus:outline-none">
+            <span class="w-4 h-4 rounded-full bg-pink-400 border-2 border-white shadow-lg animate-bounce"></span>
+            <span class="px-2 py-0.5 rounded-md bg-slate-800/90 text-pink-200 text-[11px] font-bold group-hover:bg-pink-500 group-hover:text-white transition">논골담길·도째비골</span>
+          </button>
+
+          <!-- 3. 추암 촛대바위 (남부 해안) -->
+          <button onclick="scrollToPlace('place-chuam')" class="absolute bottom-[10%] right-[22%] sm:right-[24%] group flex items-center space-x-1.5 focus:outline-none">
+            <span class="w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white shadow-lg"></span>
+            <span class="px-2 py-0.5 rounded-md bg-slate-800/90 text-amber-200 text-[11px] font-bold group-hover:bg-amber-500 group-hover:text-white transition">추암 촛대바위</span>
+          </button>
+
+          <!-- 4. 무릉별유천지 (내륙 복합) -->
+          <button onclick="scrollToPlace('place-byeolyu')" class="absolute top-[48%] left-[32%] sm:left-[36%] group flex items-center space-x-1.5 focus:outline-none">
+            <span class="w-3.5 h-3.5 rounded-full bg-purple-400 border-2 border-white shadow-lg"></span>
+            <span class="px-2 py-0.5 rounded-md bg-slate-800/90 text-purple-200 text-[11px] font-bold group-hover:bg-purple-500 group-hover:text-white transition">무릉별유천지</span>
+          </button>
+
+          <!-- 5. 무릉계곡 & 베틀바위 (서부 산악) -->
+          <button onclick="scrollToPlace('place-mureung')" class="absolute bottom-[16%] left-[16%] sm:left-[22%] group flex items-center space-x-1.5 focus:outline-none">
+            <span class="w-4 h-4 rounded-full bg-emerald-400 border-2 border-white shadow-lg animate-pulse-subtle"></span>
+            <span class="px-2 py-0.5 rounded-md bg-slate-800/90 text-emerald-200 text-[11px] font-bold group-hover:bg-emerald-500 group-hover:text-white transition">무릉계곡·베틀바위</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PLACES GRID ================= -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="places-grid">
+
+      <!-- 1. 무릉계곡 & 베틀바위 -->
+      <article id="place-mureung" data-category="mountain" class="place-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col">
+        <div class="relative h-48 sm:h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80" 
+               alt="무릉계곡 베틀바위 풍경" 
+               class="w-full h-full object-cover hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 px-2.5 py-1 bg-emerald-700/90 backdrop-blur-md text-white text-[11px] font-bold rounded-lg">
+            #산·힐링 #국가명승
+          </span>
+          <span class="absolute bottom-3 right-3 px-2 py-0.5 bg-black/60 text-white text-[11px] rounded">
+            동해역 버스 30분
+          </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between">
+              <h3 class="text-lg font-bold text-slate-900">무릉계곡 & 베틀바위</h3>
+              <span class="text-xs font-semibold text-emerald-600">한국의 장가계</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              호암소에서 용추폭포까지 이르는 약 4km의 비경. 거대한 천연 암반 ‘무릉반석’과 신선봉, 베틀바위 산성길의 웅장한 바위 절벽이 감탄을 자아냅니다.
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">삼화사</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">쌍폭포</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">산채비빔밥</span>
+            </div>
+          </div>
+
+          <!-- 대중교통 상세 토글 아코디언 -->
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <button onclick="toggleTransit('transit-mureung')" class="w-full flex items-center justify-between text-xs font-semibold text-cyan-700 hover:text-cyan-800 py-1">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="bus" class="w-3.5 h-3.5"></i>
+                <span>대중교통 길찾기 상세 보기</span>
+              </span>
+              <i data-lucide="chevron-down" id="arrow-transit-mureung" class="w-3.5 h-3.5 transition-transform"></i>
+            </button>
+            <div id="transit-mureung" class="hidden mt-2 p-3 bg-slate-50 rounded-xl text-[11px] text-slate-600 space-y-1.5 border border-slate-200/60">
+              <p><strong class="text-slate-800">🚌 KTX 동해역 출발:</strong> 역 앞 정류소에서 <strong>111번 버스</strong> 탑승 $ightarrow$ 종점 <strong>무릉계곡(주차장)</strong> 하차 (약 30~35분 소요, 배차 40~60분)</p>
+              <p><strong class="text-slate-800">🚏 시티투어버스:</strong> 동해 시티투어버스 탑승 시 바로 정차</p>
+              <p class="text-amber-700 font-medium">💡 팁: 하산 시 주차장 종점에 부착된 111번 회차 시간표를 미리 찍어두세요!</p>
+              <div class="pt-1.5 flex gap-2">
+                <a href="https://map.kakao.com/link/to/무릉계곡,37.46467,129.0201" target="_blank" class="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded font-medium text-[10px]">카카오맵 길찾기</a>
+                <a href="https://map.naver.com/v5/search/동해%20무릉계곡" target="_blank" class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-medium text-[10px]">네이버지도</a>
+              </div>
+            </div>
+
+            <!-- 하단 액션 버튼들 -->
+            <div class="mt-3 flex items-center gap-2">
+              <button onclick="addToPlan('무릉계곡 & 베틀바위', '산·힐링', 150)" class="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1 transition">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>코스에 담기</span>
+              </button>
+              <button onclick="shareSinglePlace('무릉계곡 & 베틀바위', '한국의 장가계라 불리는 두타산 무릉계곡의 웅장한 비경!')" class="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 transition" title="이 장소만 공유">
+                <i data-lucide="share" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. 논골담길 & 묵호등대 / 도째비골 -->
+      <article id="place-nongol" data-category="alley" class="place-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col">
+        <div class="relative h-48 sm:h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80" 
+               alt="논골담길 감성 벽화 골목" 
+               class="w-full h-full object-cover hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 px-2.5 py-1 bg-pink-600/90 backdrop-blur-md text-white text-[11px] font-bold rounded-lg">
+            #골목·감성 #인생샷
+          </span>
+          <span class="absolute bottom-3 right-3 px-2 py-0.5 bg-black/60 text-white text-[11px] rounded">
+            묵호역 도보 15분
+          </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between">
+              <h3 class="text-lg font-bold text-slate-900">논골담길 & 묵호등대</h3>
+              <span class="text-xs font-semibold text-pink-600">바다 품은 벽화마을</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              옛 묵호항 어민들의 삶과 애환이 골목길 벽화로 피어난 감성 명소. 바람의 언덕 전망대에서 내려다보는 쪽빛 묵호 바다와 카페거리가 일품입니다.
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">바람의언덕</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">등대오션뷰카페</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">도째비골연계</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <button onclick="toggleTransit('transit-nongol')" class="w-full flex items-center justify-between text-xs font-semibold text-cyan-700 hover:text-cyan-800 py-1">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="bus" class="w-3.5 h-3.5"></i>
+                <span>대중교통 길찾기 상세 보기</span>
+              </span>
+              <i data-lucide="chevron-down" id="arrow-transit-nongol" class="w-3.5 h-3.5 transition-transform"></i>
+            </button>
+            <div id="transit-nongol" class="hidden mt-2 p-3 bg-slate-50 rounded-xl text-[11px] text-slate-600 space-y-1.5 border border-slate-200/60">
+              <p><strong class="text-slate-800">🚶 KTX 묵호역 출발:</strong> 묵호역 1번 출구에서 묵호항 수변공원 방향 도보 약 15~18분 (택시 기본요금 3~4분)</p>
+              <p><strong class="text-slate-800">🚌 시내버스:</strong> 묵호역 앞 정류소에서 <strong>212번, 111번</strong> 탑승 $ightarrow$ <strong>묵호시장</strong> 또는 <strong>논골입구</strong> 하차 (약 5분)</p>
+              <p class="text-amber-700 font-medium">💡 팁: 논골1길로 올라가 묵호등대를 보고 도째비골 스카이밸리로 내려오는 코스를 추천합니다.</p>
+              <div class="pt-1.5 flex gap-2">
+                <a href="https://map.kakao.com/link/to/논골담길,37.5518,129.1172" target="_blank" class="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded font-medium text-[10px]">카카오맵 길찾기</a>
+                <a href="https://map.naver.com/v5/search/묵호%20논골담길" target="_blank" class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-medium text-[10px]">네이버지도</a>
+              </div>
+            </div>
+
+            <div class="mt-3 flex items-center gap-2">
+              <button onclick="addToPlan('논골담길 & 묵호등대', '골목·감성', 90)" class="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1 transition">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>코스에 담기</span>
+              </button>
+              <button onclick="shareSinglePlace('논골담길 & 묵호등대', '묵호 바다가 한눈에 내려다보이는 감성 벽화마을 논골담길!')" class="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 transition" title="이 장소만 공유">
+                <i data-lucide="share" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. 추암 촛대바위 & 출렁다리 -->
+      <article id="place-chuam" data-category="sea" class="place-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col">
+        <div class="relative h-48 sm:h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" 
+               alt="추암 촛대바위와 에메랄드 바다" 
+               class="w-full h-full object-cover hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 px-2.5 py-1 bg-cyan-700/90 backdrop-blur-md text-white text-[11px] font-bold rounded-lg">
+            #바다·일출 #동해명소
+          </span>
+          <span class="absolute bottom-3 right-3 px-2 py-0.5 bg-black/60 text-white text-[11px] rounded">
+            동해역 버스 15분
+          </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between">
+              <h3 class="text-lg font-bold text-slate-900">추암 촛대바위 & 출렁다리</h3>
+              <span class="text-xs font-semibold text-amber-600">애국가 일출 명소</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              조선 세조 때 한명회가 ‘능파대(미인의 걸음걸이)’라 극찬한 기암괴석과 바다 위 촛대바위. 해안 산책로와 해상 출렁다리에서 바라보는 바다 전망이 장관입니다.
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">일출1번지</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">해상출렁다리</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">추암조각공원</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <button onclick="toggleTransit('transit-chuam')" class="w-full flex items-center justify-between text-xs font-semibold text-cyan-700 hover:text-cyan-800 py-1">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="bus" class="w-3.5 h-3.5"></i>
+                <span>대중교통 길찾기 상세 보기</span>
+              </span>
+              <i data-lucide="chevron-down" id="arrow-transit-chuam" class="w-3.5 h-3.5 transition-transform"></i>
+            </button>
+            <div id="transit-chuam" class="hidden mt-2 p-3 bg-slate-50 rounded-xl text-[11px] text-slate-600 space-y-1.5 border border-slate-200/60">
+              <p><strong class="text-slate-800">🚌 KTX 동해역 출발:</strong> 동해역 앞 정류소에서 <strong>161번, 162번</strong> 시내버스 탑승 $ightarrow$ <strong>추암해변</strong> 종점 하차 (약 15분 소요)</p>
+              <p><strong class="text-slate-800">🚕 택시 이용 시:</strong> 동해역에서 약 8~10분 (요금 약 6,500원)</p>
+              <p class="text-amber-700 font-medium">💡 팁: 해 질 녘 해상 출렁다리에 야간 경관 조명이 켜지면 낭만적인 밤 산책이 가능합니다.</p>
+              <div class="pt-1.5 flex gap-2">
+                <a href="https://map.kakao.com/link/to/추암촛대바위,37.4788,129.1601" target="_blank" class="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded font-medium text-[10px]">카카오맵 길찾기</a>
+                <a href="https://map.naver.com/v5/search/추암%20촛대바위" target="_blank" class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-medium text-[10px]">네이버지도</a>
+              </div>
+            </div>
+
+            <div class="mt-3 flex items-center gap-2">
+              <button onclick="addToPlan('추암 촛대바위', '바다·일출', 70)" class="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1 transition">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>코스에 담기</span>
+              </button>
+              <button onclick="shareSinglePlace('추암 촛대바위', '애국가 첫 소절의 감동 그대로! 추암 촛대바위와 출렁다리')" class="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 transition" title="이 장소만 공유">
+                <i data-lucide="share" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. 도째비골 스카이밸리 & 해랑전망대 / 묵호항 -->
+      <article id="place-dojjaebi" data-category="activity" class="place-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col">
+        <div class="relative h-48 sm:h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" 
+               alt="도째비골 해랑전망대 바다 조망" 
+               class="w-full h-full object-cover hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 px-2.5 py-1 bg-indigo-600/90 backdrop-blur-md text-white text-[11px] font-bold rounded-lg">
+            #체험·액티비티 #스릴
+          </span>
+          <span class="absolute bottom-3 right-3 px-2 py-0.5 bg-black/60 text-white text-[11px] rounded">
+            묵호역 도보 18분
+          </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between">
+              <h3 class="text-lg font-bold text-slate-900">도째비골 스카이밸리 & 묵호항</h3>
+              <span class="text-xs font-semibold text-indigo-600">바다 위 짜릿한 체험</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              도깨비 방망이를 형상화한 해랑전망대와 59m 상공에서 자전거를 타는 스카이사이클, 대형 미끄럼틀 자이언트슬라이드! 묵호항에서 싱싱한 활어회도 맛보세요.
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">스카이사이클</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">해랑전망대</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">묵호활어회센터</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <button onclick="toggleTransit('transit-dojjaebi')" class="w-full flex items-center justify-between text-xs font-semibold text-cyan-700 hover:text-cyan-800 py-1">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="bus" class="w-3.5 h-3.5"></i>
+                <span>대중교통 길찾기 상세 보기</span>
+              </span>
+              <i data-lucide="chevron-down" id="arrow-transit-dojjaebi" class="w-3.5 h-3.5 transition-transform"></i>
+            </button>
+            <div id="transit-dojjaebi" class="hidden mt-2 p-3 bg-slate-50 rounded-xl text-[11px] text-slate-600 space-y-1.5 border border-slate-200/60">
+              <p><strong class="text-slate-800">🚶 KTX 묵호역:</strong> 묵호항 수변공원을 지나 해안도로를 따라 도보 약 18~20분</p>
+              <p><strong class="text-slate-800">🚌 시내버스:</strong> 묵호역 앞 정류소에서 <strong>212번</strong> 탑승 $ightarrow$ <strong>도째비골입구</strong> 하차</p>
+              <div class="pt-1.5 flex gap-2">
+                <a href="https://map.kakao.com/link/to/도째비골스카이밸리,37.5546,129.1176" target="_blank" class="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded font-medium text-[10px]">카카오맵 길찾기</a>
+                <a href="https://map.naver.com/v5/search/도째비골스카이밸리" target="_blank" class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-medium text-[10px]">네이버지도</a>
+              </div>
+            </div>
+
+            <div class="mt-3 flex items-center gap-2">
+              <button onclick="addToPlan('도째비골 & 묵호항', '체험·미식', 80)" class="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1 transition">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>코스에 담기</span>
+              </button>
+              <button onclick="shareSinglePlace('도째비골 스카이밸리', '바다 위 하늘 자전거와 해랑전망대 스릴 체험!')" class="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 transition" title="이 장소만 공유">
+                <i data-lucide="share" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. 무릉별유천지 -->
+      <article id="place-byeolyu" data-category="activity" class="place-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col">
+        <div class="relative h-48 sm:h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" 
+               alt="무릉별유천지 에메랄드 호수" 
+               class="w-full h-full object-cover hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 px-2.5 py-1 bg-purple-600/90 backdrop-blur-md text-white text-[11px] font-bold rounded-lg">
+            #체험·액티비티 #이색재생
+          </span>
+          <span class="absolute bottom-3 right-3 px-2 py-0.5 bg-black/60 text-white text-[11px] rounded">
+            동해역 버스 25분
+          </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between">
+              <h3 class="text-lg font-bold text-slate-900">무릉별유천지</h3>
+              <span class="text-xs font-semibold text-purple-600">폐쇄석장의 에메랄드 호수</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              40여 년간 석회석을 채광하던 공간이 복합문화체험공간으로 대변신! 에메랄드빛 청옥호, 스카이글라이더, 오프로드 루지, 라벤더 정원을 즐겨보세요.
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">스카이글라이더</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">알파인코스터</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">쇄석장전망카페</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <button onclick="toggleTransit('transit-byeolyu')" class="w-full flex items-center justify-between text-xs font-semibold text-cyan-700 hover:text-cyan-800 py-1">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="bus" class="w-3.5 h-3.5"></i>
+                <span>대중교통 길찾기 상세 보기</span>
+              </span>
+              <i data-lucide="chevron-down" id="arrow-transit-byeolyu" class="w-3.5 h-3.5 transition-transform"></i>
+            </button>
+            <div id="transit-byeolyu" class="hidden mt-2 p-3 bg-slate-50 rounded-xl text-[11px] text-slate-600 space-y-1.5 border border-slate-200/60">
+              <p><strong class="text-slate-800">🚌 KTX 동해역:</strong> <strong>111번 버스</strong> 탑승 $ightarrow$ <strong>무릉별유천지(삼화동)</strong> 정류소 하차 (약 25분)</p>
+              <p><strong class="text-slate-800">🚏 시티투어버스:</strong> 무릉별유천지 제2출입구 앞 정차</p>
+              <div class="pt-1.5 flex gap-2">
+                <a href="https://map.kakao.com/link/to/무릉별유천지,37.4782,129.0494" target="_blank" class="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded font-medium text-[10px]">카카오맵 길찾기</a>
+                <a href="https://map.naver.com/v5/search/무릉별유천지" target="_blank" class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-medium text-[10px]">네이버지도</a>
+              </div>
+            </div>
+
+            <div class="mt-3 flex items-center gap-2">
+              <button onclick="addToPlan('무릉별유천지', '체험·액티비티', 120)" class="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1 transition">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>코스에 담기</span>
+              </button>
+              <button onclick="shareSinglePlace('무릉별유천지', '에메랄드빛 호수와 이색 액티비티가 가득한 무릉별유천지!')" class="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 transition" title="이 장소만 공유">
+                <i data-lucide="share" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. 망상해변 & 서핑비치 -->
+      <article id="place-mangsang" data-category="sea" class="place-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition flex flex-col">
+        <div class="relative h-48 sm:h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" 
+               alt="망상해변 넓은 백사장" 
+               class="w-full h-full object-cover hover:scale-105 transition duration-500">
+          <span class="absolute top-3 left-3 px-2.5 py-1 bg-cyan-600/90 backdrop-blur-md text-white text-[11px] font-bold rounded-lg">
+            #바다·일출 #캠핑서핑
+          </span>
+          <span class="absolute bottom-3 right-3 px-2 py-0.5 bg-black/60 text-white text-[11px] rounded">
+            묵호역 버스 15분
+          </span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between">
+              <h3 class="text-lg font-bold text-slate-900">망상해변 & 오토캠핑리조트</h3>
+              <span class="text-xs font-semibold text-cyan-600">명품 백사장과 송림</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              수심이 완만하고 끝없이 펼쳐진 은빛 백사장. 국내 최고의 자동차 캠핑장과 서핑 명소, 울창한 해송 숲을 따라 걷는 힐링 바다 산책로가 펼쳐집니다.
+            </p>
+            <div class="mt-3 flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">오토캠핑</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">망상서핑</span>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px]">해송숲산책로</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <button onclick="toggleTransit('transit-mangsang')" class="w-full flex items-center justify-between text-xs font-semibold text-cyan-700 hover:text-cyan-800 py-1">
+              <span class="flex items-center space-x-1.5">
+                <i data-lucide="bus" class="w-3.5 h-3.5"></i>
+                <span>대중교통 길찾기 상세 보기</span>
+              </span>
+              <i data-lucide="chevron-down" id="arrow-transit-mangsang" class="w-3.5 h-3.5 transition-transform"></i>
+            </button>
+            <div id="transit-mangsang" class="hidden mt-2 p-3 bg-slate-50 rounded-xl text-[11px] text-slate-600 space-y-1.5 border border-slate-200/60">
+              <p><strong class="text-slate-800">🚌 KTX 묵호역:</strong> 묵호역 앞 정류소에서 <strong>111번, 212번</strong> 등 망상 방면 버스 탑승 $ightarrow$ <strong>망상해변</strong> 하차 (약 15분)</p>
+              <p><strong class="text-slate-800">🚕 택시:</strong> 묵호역에서 약 8분 거리 (약 6,500원)</p>
+              <div class="pt-1.5 flex gap-2">
+                <a href="https://map.kakao.com/link/to/망상해수욕장,37.5884,129.0886" target="_blank" class="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-slate-900 rounded font-medium text-[10px]">카카오맵 길찾기</a>
+                <a href="https://map.naver.com/v5/search/망상해수욕장" target="_blank" class="px-2 py-1 bg-green-500 hover:bg-green-600 text-white rounded font-medium text-[10px]">네이버지도</a>
+              </div>
+            </div>
+
+            <div class="mt-3 flex items-center gap-2">
+              <button onclick="addToPlan('망상해변 & 캠핑장', '바다·힐링', 90)" class="flex-1 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1 transition">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>코스에 담기</span>
+              </button>
+              <button onclick="shareSinglePlace('망상해변', '은빛 백사장과 명품 오토캠핑, 망상해변으로 오세요!')" class="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 transition" title="이 장소만 공유">
+                <i data-lucide="share" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- ================= FLOATING COURSE PLANNER DRAWER ================= -->
+  <aside id="planner-bar" class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-lg border-t border-slate-200 shadow-2xl transition-transform duration-300 transform translate-y-0">
+    <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">
+            <span id="plan-count">0</span>
+          </div>
+          <div>
+            <div class="text-xs sm:text-sm font-bold text-slate-900">
+              나만의 동해 여행 코스 
+              <span id="plan-duration-badge" class="ml-1.5 px-2 py-0.5 bg-cyan-100 text-cyan-800 rounded text-[11px] font-semibold">반일 코스</span>
+            </div>
+            <p id="plan-summary-text" class="text-[11px] sm:text-xs text-slate-500">
+              명소 카드의 [+ 코스에 담기] 버튼을 눌러보세요.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="clearPlan()" class="text-xs text-slate-400 hover:text-slate-600 px-2 py-1.5 rounded transition">
+            초기화
+          </button>
+          <button onclick="openStoryModal()" class="px-3 py-2 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-xs font-bold rounded-xl shadow-sm flex items-center space-x-1.5 transition">
+            <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">인스타 스토리</span> 카드
+          </button>
+          <button onclick="shareMyPlanKakao()" class="px-3.5 py-2 bg-amber-400 hover:bg-amber-500 text-slate-900 text-xs font-bold rounded-xl shadow-sm flex items-center space-x-1.5 transition">
+            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            <span>일정 공유</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 선택된 명소 칩 리스트 (가로 스크롤) -->
+      <div id="plan-items-container" class="mt-2.5 flex items-center space-x-2 overflow-x-auto pb-1 custom-scrollbar empty:hidden">
+        <!-- 칩들이 동적으로 삽입됩니다 -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= CITY TOUR BUS MODAL ================= -->
+  <div id="bus-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+      <button onclick="closeCityBusModal()" class="absolute top-4 right-4 p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center space-x-2 text-amber-600 mb-2">
+        <i data-lucide="bus" class="w-5 h-5"></i>
+        <h3 class="font-bold text-base text-slate-900">동해 순환 시티투어버스 완벽 가이드</h3>
+      </div>
+      <p class="text-xs text-slate-500 mb-4">KTX 묵호역에서 출발해 주요 관광지를 편리하게 순환하는 뚜벅이 필수 버스!</p>
+
+      <div class="space-y-3 text-xs text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <div class="flex items-start space-x-2">
+          <span class="px-1.5 py-0.5 bg-amber-500 text-white rounded text-[10px] font-bold shrink-0 mt-0.5">순환노선</span>
+          <p class="leading-relaxed">
+            묵호역 $ightarrow$ 묵호항 수변공원 $ightarrow$ 망상해변 $ightarrow$ 종합버스터미널 $ightarrow$ 천곡황금박쥐동굴 $ightarrow$ 무릉별유천지 $ightarrow$ 무릉계곡 $ightarrow$ 추암해변 $ightarrow$ 감추사 $ightarrow$ 묵호역
+          </p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="px-1.5 py-0.5 bg-blue-500 text-white rounded text-[10px] font-bold shrink-0">이용요금</span>
+          <p>성인 기준 1일 자유이용권 5,000원 (당일 무제한 환승 가능)</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="px-1.5 py-0.5 bg-emerald-500 text-white rounded text-[10px] font-bold shrink-0">탑승방법</span>
+          <p>최초 탑승 시 기사님께 현금/카드 결제 후 손목 밴드 수령</p>
+        </div>
+      </div>
+
+      <div class="mt-5 flex justify-end">
+        <button onclick="closeCityBusModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl">
+          확인했습니다
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= INSTAGRAM STORY CARD MODAL ================= -->
+  <div id="story-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative text-center">
+      <button onclick="closeStoryModal()" class="absolute top-4 right-4 p-1 rounded-full text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- 9:16 모바일 인스타 카드 프리뷰 박스 -->
+      <div id="capture-story-card" class="w-full aspect-[9/16] max-h-[480px] bg-gradient-to-br from-cyan-600 via-blue-700 to-indigo-900 rounded-2xl p-6 text-white flex flex-col justify-between shadow-inner relative overflow-hidden my-3">
+        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+        <div class="text-left relative z-10">
+          <span class="text-[10px] tracking-widest font-extrabold uppercase px-2 py-0.5 bg-white/20 rounded-full">DONGHAE TRIP</span>
+          <h4 class="text-2xl font-black mt-3 leading-tight">나의 동해<br>감성 여행 코스</h4>
+          <p class="text-xs text-cyan-200 mt-1">산과 바다가 만나는 힐링 투어</p>
+        </div>
+
+        <!-- 코스 목록 -->
+        <div class="space-y-2 text-left my-auto relative z-10" id="story-modal-list">
+          <!-- 동적으로 생성 -->
+        </div>
+
+        <div class="text-left pt-3 border-t border-white/20 relative z-10 flex items-center justify-between">
+          <div>
+            <p class="text-[10px] text-cyan-200">동해시 인터랙티브 가이드</p>
+            <p class="text-xs font-bold tracking-tight">#동해여행 #푸른바다</p>
+          </div>
+          <i data-lucide="compass" class="w-6 h-6 text-cyan-300"></i>
+        </div>
+      </div>
+
+      <p class="text-[11px] text-slate-500 mt-2">화면을 캡처하여 인스타그램 스토리나 피드에 바로 공유해 보세요!</p>
+      <div class="mt-4 flex gap-2">
+        <button onclick="copyPlanTextSummary()" class="flex-1 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span>코스 텍스트 복사</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 컴포넌트 -->
+  <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-medium shadow-lg opacity-0 transition-opacity pointer-events-none flex items-center space-x-2">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">알림</span>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // Lucide 아이콘 초기화
+    lucide.createIcons();
+
+    // 상태 관리 (내 코스 플래너)
+    let myPlan = [
+      { name: '논골담길 & 묵호등대', theme: '골목·감성', duration: 90 },
+      { name: '무릉계곡 & 베틀바위', theme: '산·힐링', duration: 150 }
+    ];
+
+    // 초기 화면 렌더링
+    renderPlan();
+
+    // 1. 대중교통 상세 아코디언 토글
+    function toggleTransit(id) {
+      const el = document.getElementById(id);
+      const arrow = document.getElementById('arrow-' + id);
+      if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+        if (arrow) arrow.style.transform = 'rotate(180deg)';
+      } else {
+        el.classList.add('hidden');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // 2. 지도 핀 클릭 시 스크롤 이동 및 대중교통 펼치기
+    function scrollToPlace(placeId) {
+      const target = document.getElementById(placeId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.add('ring-4', 'ring-cyan-400');
+        setTimeout(() => target.classList.remove('ring-4', 'ring-cyan-400'), 2000);
+        
+        // 해당 카드의 대중교통 정보 자동 열기
+        const transitId = placeId.replace('place-', 'transit-');
+        const transitEl = document.getElementById(transitId);
+        if (transitEl && transitEl.classList.contains('hidden')) {
+          toggleTransit(transitId);
+        }
+      }
+    }
+
+    // 3. 테마 필터링 기능
+    function filterPlaces(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-slate-900', 'shadow-sm', 'font-semibold');
+        btn.classList.add('text-slate-600');
+      });
+      event.target.classList.add('bg-white', 'text-slate-900', 'shadow-sm', 'font-semibold');
+      event.target.classList.remove('text-slate-600');
+
+      const cards = document.querySelectorAll('.place-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // 4. 여행 코스에 담기
+    function addToPlan(name, theme, duration) {
+      if (myPlan.some(item => item.name === name)) {
+        showToast('이미 코스에 추가된 여행지입니다.');
+        return;
+      }
+      myPlan.push({ name, theme, duration });
+      renderPlan();
+      confetti({ particleCount: 35, spread: 60, origin: { y: 0.85 } });
+      showToast(`'${name}' 여행지가 코스에 추가되었습니다.`);
+    }
+
+    function removePlanItem(index) {
+      myPlan.splice(index, 1);
+      renderPlan();
+    }
+
+    function clearPlan() {
+      myPlan = [];
+      renderPlan();
+      showToast('코스가 초기화되었습니다.');
+    }
+
+    // 5. 플래너 렌더링
+    function renderPlan() {
+      const countEl = document.getElementById('plan-count');
+      const badgeEl = document.getElementById('plan-duration-badge');
+      const summaryEl = document.getElementById('plan-summary-text');
+      const containerEl = document.getElementById('plan-items-container');
+
+      countEl.innerText = myPlan.length;
+
+      if (myPlan.length === 0) {
+        badgeEl.innerText = '0시간';
+        summaryEl.innerText = '원하는 명소 카드의 [+ 코스에 담기] 버튼을 눌러보세요.';
+        containerEl.innerHTML = '';
+        return;
+      }
+
+      const totalMinutes = myPlan.reduce((acc, cur) => acc + cur.duration, 0);
+      const hours = Math.floor(totalMinutes / 60);
+      const mins = totalMinutes % 60;
+      
+      let typeText = '반일 코스';
+      if (totalMinutes > 360) typeText = '1박 2일 코스';
+      else if (totalMinutes > 200) typeText = '당일 코스';
+
+      badgeEl.innerText = `${typeText} (${hours}시간 ${mins > 0 ? mins + '분' : ''})`;
+      summaryEl.innerText = `총 ${myPlan.length}곳 방문 예정 (이동 및 관람 포함)`;
+
+      containerEl.innerHTML = myPlan.map((item, index) => `
+        <div class="inline-flex items-center space-x-1.5 px-3 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-200/80 rounded-full text-xs shrink-0 transition">
+          <span class="w-4 h-4 rounded-full bg-cyan-600 text-white flex items-center justify-center text-[10px] font-bold">${index + 1}</span>
+          <span class="font-medium text-slate-800">${item.name}</span>
+          <button onclick="removePlanItem(${index})" class="text-slate-400 hover:text-red-500 ml-1">
+            <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // 6. SNS 및 네이티브 공유 로직
+    function shareViaWebShare() {
+      const shareData = {
+        title: '푸른 바다와 비경의 계곡, 동해시 감성 투어 가이드',
+        text: '무릉계곡부터 논골담길, 추암 촛대바위까지! 상세 대중교통과 코스 플래너로 즐기는 동해 여행 🌊',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => copyCurrentUrl());
+      } else {
+        copyCurrentUrl();
+      }
+    }
+
+    function shareSinglePlace(name, desc) {
+      if (navigator.share) {
+        navigator.share({
+          title: `[동해 여행] ${name}`,
+          text: desc,
+          url: window.location.href
+        }).catch(() => copyCurrentUrl());
+      } else {
+        copyText(`[동해 여행 추천] ${name}
+${desc}
+${window.location.href}`);
+      }
+    }
+
+    function shareMyPlanKakao() {
+      if (myPlan.length === 0) {
+        showToast('먼저 1개 이상의 여행지를 코스에 담아주세요.');
+        return;
+      }
+      const routeText = myPlan.map((item, i) => `${i + 1}. ${item.name}`).join(' -> ');
+      const fullMsg = `[나의 동해시 맞춤 여행 코스]
+동선: ${routeText}
+자세히 보기: ${window.location.href}`;
+      copyText(fullMsg);
+      showToast('여행 코스가 클립보드에 복사되었습니다! 카톡 등에 붙여넣어 보세요.');
+    }
+
+    function copyPlanTextSummary() {
+      if (myPlan.length === 0) {
+        showToast('코스에 담긴 명소가 없습니다.');
+        return;
+      }
+      const routeText = myPlan.map((item, i) => `${i + 1}. ${item.name} (${item.theme})`).join('
+');
+      copyText(`✨ 내가 짠 동해 여행 코스 ✨
+
+${routeText}
+
+#동해여행 #인터랙티브가이드`);
+    }
+
+    function copyCurrentUrl() {
+      copyText(window.location.href);
+      showToast('홈페이지 링크가 복사되었습니다!');
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast('복사 완료! SNS에 붙여넣어 보세요.')).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('복사 완료!');
+    }
+
+    // 7. 모달 제어
+    function openCityBusModal() {
+      document.getElementById('bus-modal').classList.remove('hidden');
+      document.getElementById('bus-modal').classList.add('flex');
+    }
+    function closeCityBusModal() {
+      document.getElementById('bus-modal').classList.add('hidden');
+      document.getElementById('bus-modal').classList.remove('flex');
+    }
+
+    function openStoryModal() {
+      if (myPlan.length === 0) {
+        showToast('먼저 코스에 여행지를 담아주세요.');
+        return;
+      }
+      const listEl = document.getElementById('story-modal-list');
+      listEl.innerHTML = myPlan.map((item, i) => `
+        <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-3 py-2 rounded-xl">
+          <span class="w-5 h-5 rounded-full bg-cyan-400 text-slate-900 flex items-center justify-center font-black text-xs">${i + 1}</span>
+          <span class="font-bold text-sm text-white">${item.name}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('story-modal').classList.remove('hidden');
+      document.getElementById('story-modal').classList.add('flex');
+      lucide.createIcons();
+    }
+    function closeStoryModal() {
+      document.getElementById('story-modal').classList.add('hidden');
+      document.getElementById('story-modal').classList.remove('flex');
+    }
+
+    // 토스트 메시지 함수
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.innerText = msg;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
